@@ -1,0 +1,8 @@
+# Virtualenv
+venv/
+*.pyc
+__pycache__/
+.idea/
+*.pyo
+*.pyd
+*.pdb
