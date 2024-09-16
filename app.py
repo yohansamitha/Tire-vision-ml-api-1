@@ -3,7 +3,7 @@ import io
 
 import numpy as np
 from PIL import Image
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 
@@ -30,7 +30,9 @@ def predict():
         data = request.get_json()
 
         if not data or 'image' not in data:
-            return jsonify({'error': 'No image provided'}), 400
+            response = make_response(jsonify({'error': 'No image provided'}), 400)
+            response.headers['Content-Type'] = 'application/json'
+            return response
 
         image_data = data['image']
 
@@ -49,10 +51,14 @@ def predict():
 
         predicted_class = int(prediction[0] > 0.5)
 
-        return jsonify({'prediction': predicted_class})
+        response = make_response(jsonify({'prediction': predicted_class}), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        response = make_response(jsonify({'error': str(e)}), 400)
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
 
 if __name__ == '__main__':
