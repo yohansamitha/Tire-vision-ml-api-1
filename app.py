@@ -49,9 +49,12 @@ def predict():
 
         prediction = model.predict(processed_image)
 
-        predicted_class = int(prediction[0] > 0.5)
+        percentage = prediction[0][0] * 100
+        rounded_percentage = round(percentage)
+        formatted_percentage = f"{rounded_percentage:02d}"
+        print("formatted_percentage : ", formatted_percentage, " | ")
 
-        response = make_response(jsonify({'prediction': predicted_class}), 200)
+        response = make_response(jsonify({'result': formatted_percentage}), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
