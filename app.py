@@ -29,12 +29,12 @@ def predict():
     try:
         data = request.get_json()
 
-        if not data or 'image' not in data:
-            response = make_response(jsonify({'error': 'No image provided'}), 400)
+        if not data or 'imageData' not in data:
+            response = make_response(jsonify({'error': 'No image provided 1'}), 400)
             response.headers['Content-Type'] = 'application/json'
             return response
 
-        image_data = data['image']
+        image_data = data['imageData']
 
         if image_data.startswith('data:image/jpeg;base64,'):
             image_data = image_data.split('data:image/jpeg;base64,')[-1]
